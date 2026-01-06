@@ -11,13 +11,17 @@ export default function Home() {
     if (!query) return;
     setLoading(true);
     setPitch('');
-    const res = await fetch('/api/pitch', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query, expertise, tone })
-    });
-    const data = await res.json();
-    setPitch(data.pitch || data.error || 'Something went wrong');
+    try {
+      const res = await fetch('/api/pitch', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query, expertise, tone })
+      });
+      const data = await res.json();
+      setPitch(data.pitch || data.error || 'API not connected yet — form works!');
+    } catch (err) {
+      setPitch('Connection issue — try again');
+    }
     setLoading(false);
   };
 
