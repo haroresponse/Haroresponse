@@ -4,7 +4,7 @@ export default function Home() {
   const [query, setQuery] = useState('');
   const [expertise, setExpertise] = useState('remote dad');
   const [tone, setTone] = useState('casual');
-  const [pitch, setPitch] = useState('');
+  the [pitch, setPitch] = useState('');
   const [loading, setLoading] = useState(false);
 
   const submit = async () => {
@@ -18,9 +18,9 @@ export default function Home() {
         body: JSON.stringify({ query, expertise, tone })
       });
       const data = await res.json();
-      setPitch(data.pitch || data.error || 'API not connected yet — form works!');
+      setPitch(data.pitch || data.error || 'API not connected');
     } catch (err) {
-      setPitch('Connection issue — try again');
+      setPitch('Error — check OpenAI key');
     }
     setLoading(false);
   };
@@ -72,7 +72,7 @@ export default function Home() {
           color: 'white',
           border: 'none',
           borderRadius: '12px',
-          cursor: loading || !query ? 'not-allowed' : 'pointer'
+          cursor: 'pointer'
         }}
       >
         {loading ? 'Generating...' : 'Get Pitch'}
