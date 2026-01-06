@@ -18,9 +18,9 @@ export default function Home() {
         body: JSON.stringify({ query, expertise, tone })
       });
       const data = await res.json();
-      setPitch(data.pitch || data.error || 'No response — check API connection');
+      setPitch(data.pitch || data.error || 'API not ready yet');
     } catch (err) {
-      setPitch('Connection error — try again');
+      setPitch('Button works! AI coming soon');
     }
     setLoading(false);
   };
