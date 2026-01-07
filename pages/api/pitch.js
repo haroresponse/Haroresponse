@@ -9,8 +9,12 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'No query provided' });
   }
 
+  // Add randomness to prevent identical outputs
+  const randomSeed = Date.now() + Math.random();
+  const uniqueHint = ['Make it feel fresh and original', 'Add a subtle personal touch', 'Vary the wording naturally'][Math.floor(Math.random() * 3)];
+
   const prompt = `You are a sharp PR expert. Write a concise 3-5 sentence pitch response to this HARO query: "${query}". 
-Speak as a ${expertise}. Use a ${tone} tone. Make it personal, credible, and newsworthy. Keep it under 150 words.`;
+Speak as a ${expertise}. Use a ${tone} tone. Make it personal, credible, and newsworthy. ${uniqueHint}. Seed for variation: ${randomSeed}. Keep it under 150 words.`;
 
   try {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -22,7 +26,7 @@ Speak as a ${expertise}. Use a ${tone} tone. Make it personal, credible, and new
       body: JSON.stringify({
         model: 'gpt-4o-mini',
         messages: [{ role: 'system', content: prompt }],
-        temperature: 0.7,
+        temperature: 0.9, // Higher for more variation
         max_tokens: 300,
       }),
     });
@@ -37,6 +41,6 @@ Speak as a ${expertise}. Use a ${tone} tone. Make it personal, credible, and new
     res.status(200).json({ pitch });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to generate pitch — check OpenAI key or try again' });
+    res.status(500).json({ error: 'Failed to generate pitch — try again' });
   }
 }
