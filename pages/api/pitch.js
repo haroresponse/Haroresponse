@@ -26,7 +26,7 @@ Speak as a ${expertise}. Use a ${tone} tone. Make it personal, credible, and new
       body: JSON.stringify({
         model: 'gpt-4o-mini',
         messages: [{ role: 'system', content: prompt }],
-        temperature: 0.9, // Higher for more variation
+        temperature: 1.4, // Higher for more variation
         max_tokens: 300,
       }),
     });
